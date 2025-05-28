@@ -1,5 +1,5 @@
 "use client"
-import { Bed, Check, ChefHat, Gift, Heart, Home, MessageCircle, Sparkles, User, X } from 'lucide-react';
+import { Bed, Check, ChefHat, Gift, Heart, Home, MessageCircle, User, X } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -72,20 +72,20 @@ const WeddingGiftList = () => {
     }
   });
 
-  const categories = [
+  const categories: any = [
     { id: 'all', name: 'Todos os Itens', icon: Gift },
     { id: 'kitchen', name: 'Cozinha & Área de Serviço', icon: ChefHat },
     { id: 'bedroom', name: 'Quarto & Banheiro', icon: Bed },
     { id: 'living', name: 'Sala de Estar', icon: Home }
   ];
 
-  const categoryTitles = {
+  const categoryTitles:any = {
     kitchen: 'Cozinha & Área de Serviço',
     bedroom: 'Quarto & Banheiro',
     living: 'Sala de Estar'
   };
 
-  const categoryIcons = {
+  const categoryIcons: any = {
     kitchen: ChefHat,
     bedroom: Bed,
     living: Home
@@ -147,27 +147,9 @@ const WeddingGiftList = () => {
     setFormData({ name: '', message: '' });
   };
 
-  const getPriorityColor = (priority) => {
-    switch (priority) {
-      case 'high': return 'border-stone-300 bg-gradient-to-br from-stone-50 to-neutral-50 hover:shadow-lg';
-      case 'medium': return 'border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 hover:shadow-lg';
-      case 'low': return 'border-emerald-200 bg-gradient-to-br from-emerald-50 to-green-50 hover:shadow-lg';
-      default: return 'border-stone-200 bg-white hover:shadow-lg';
-    }
-  };
-
-  // const getPriorityBadge = (priority: any) => {
-  //   switch (priority) {
-  //     case 'high': return { text: 'Prioridade Alta', color: 'bg-stone-100 text-stone-700 border-stone-200' };
-  //     case 'medium': return { text: 'Prioridade Média', color: 'bg-amber-100 text-amber-700 border-amber-200' };
-  //     case 'low': return { text: 'Prioridade Baixa', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' };
-  //     default: return { text: '', color: '' };
-  //   }
-  // };
-
   const categorizedItems = getAllItems();
   const totalItems = Object.values(jsonData.gifts).flat().length;
-  const giftedCount = Object.values(jsonData.gifts).flat().filter(item => item.gifted).length;
+  const giftedCount = Object.values(jsonData.gifts).flat().filter((item: any) => item.gifted).length;
   const progressPercentage = (giftedCount / totalItems) * 100;
 
   return (
@@ -209,7 +191,7 @@ const WeddingGiftList = () => {
       {/* Navegação por categorias */}
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="flex flex-wrap justify-center gap-6 mb-12">
-          {categories.map((category) => {
+          {categories.map((category: any) => {
             const IconComponent = category.icon;
             return (
               <button
@@ -254,7 +236,7 @@ const WeddingGiftList = () => {
 
                 {/* Grid de itens */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {items.map((item) => {
+                  {items.map((item: any) => {
                     // const priorityBadge = getPriorityBadge(item.priority);
 
                     return (
@@ -394,7 +376,6 @@ const WeddingGiftList = () => {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full  text-black px-5 py-4 border-2 border-stone-300 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 resize-none text-base"
                   placeholder="Deixe uma mensagem carinhosa para os noivos"
-                  rows="4"
                 />
               </div>
             </div>
