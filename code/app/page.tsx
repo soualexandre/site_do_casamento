@@ -1,16 +1,59 @@
 "use client"
-import { Bed, Check, ChefHat, Gift, Heart, Home, MessageCircle, User, X } from 'lucide-react';
+import { Bed, Check, ChefHat, Gift, Heart, Home, MessageCircle, User, X, LucideIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
-const WeddingGiftList = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [showModal, setShowModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
-  const [formData, setFormData] = useState({ name: '', message: '' });
-  const [giftData, setGiftData] = useState({});
+// Definindo tipos
+type Priority = 'high' | 'medium' | 'low';
+type CategoryId = 'all' | 'kitchen' | 'bedroom' | 'living';
 
-  const [jsonData, setJsonData]: any = useState({
+interface ItemGift {
+  id: string;
+  name: string;
+  gifted: boolean;
+  priority: Priority;
+  giftedBy?: string;
+  message?: string;
+}
+
+interface Category {
+  id: CategoryId;
+  name: string;
+  icon: LucideIcon;
+}
+
+interface JsonData {
+  gifts: {
+    kitchen: ItemGift[];
+    bedroom: ItemGift[];
+    living: ItemGift[];
+  };
+}
+
+interface FormData {
+  name: string;
+  message: string;
+}
+
+interface CategorizedItem {
+  category: string;
+  items: ItemGift[];
+}
+
+interface CategoryData {
+  [key: string]: {
+    title: string;
+    icon: LucideIcon;
+  };
+}
+
+const WeddingGiftList = () => {
+  const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<ItemGift | null>(null);
+  const [formData, setFormData] = useState<FormData>({ name: '', message: '' });
+
+  const [jsonData, setJsonData] = useState<JsonData>({
     gifts: {
       kitchen: [
         { id: 'k1', name: 'Máquina de Lavar roupas', gifted: true, priority: 'high', giftedBy: 'Família Silva', message: 'Desejamos muito amor e felicidade!' },
@@ -72,41 +115,44 @@ const WeddingGiftList = () => {
     }
   });
 
-  const categories: any = [
+  const categories: Category[] = [
     { id: 'all', name: 'Todos os Itens', icon: Gift },
     { id: 'kitchen', name: 'Cozinha & Área de Serviço', icon: ChefHat },
     { id: 'bedroom', name: 'Quarto & Banheiro', icon: Bed },
     { id: 'living', name: 'Sala de Estar', icon: Home }
   ];
 
-  const categoryTitles:any = {
-    kitchen: 'Cozinha & Área de Serviço',
-    bedroom: 'Quarto & Banheiro',
-    living: 'Sala de Estar'
+  const categoryData: CategoryData = {
+    kitchen: {
+      title: 'Cozinha & Área de Serviço',
+      icon: ChefHat
+    },
+    bedroom: {
+      title: 'Quarto & Banheiro',
+      icon: Bed
+    },
+    living: {
+      title: 'Sala de Estar',
+      icon: Home
+    }
   };
 
-  const categoryIcons: any = {
-    kitchen: ChefHat,
-    bedroom: Bed,
-    living: Home
-  };
-
-  const updateJsonData = (newData: any) => {
+  const updateJsonData = (newData: JsonData) => {
     setJsonData(newData);
     console.log('JSON atualizado:', newData);
   };
 
-  const getAllItems = () => {
+  const getAllItems = (): CategorizedItem[] => {
     if (selectedCategory === 'all') {
       return Object.entries(jsonData.gifts).map(([category, items]) => ({
         category,
-        items
+        items: items as ItemGift[]
       }));
     }
-    return [{ category: selectedCategory, items: jsonData.gifts[selectedCategory] || [] }];
+    return [{ category: selectedCategory, items: jsonData.gifts[selectedCategory] }];
   };
 
-  const handleGiftIntent = (item: any) => {
+  const handleGiftIntent = (item: ItemGift) => {
     if (item.gifted) return;
     setSelectedItem(item);
     setFormData({ name: '', message: '' });
@@ -114,16 +160,16 @@ const WeddingGiftList = () => {
   };
 
   const handleSubmitGift = () => {
-    if (!formData.name.trim()) {
+    if (!formData.name.trim() || !selectedItem) {
       alert('Por favor, informe seu nome.');
       return;
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const newJsonData: any = { ...jsonData };
+    const categoriesKeys: CategoryId[] = ['kitchen', 'bedroom', 'living'];
 
-    const newJsonData = { ...jsonData };
-    const allCategories = ['kitchen', 'bedroom', 'living'];
-
-    for (const category of allCategories) {
-      const itemIndex = newJsonData.gifts[category].findIndex((item: any) => item.id === selectedItem.id);
+    for (const category of categoriesKeys) {
+      const itemIndex = newJsonData.gifts[category].findIndex((item: Category) => item.id === selectedItem.id);
       if (itemIndex !== -1) {
         newJsonData.gifts[category][itemIndex] = {
           ...newJsonData.gifts[category][itemIndex],
@@ -149,7 +195,7 @@ const WeddingGiftList = () => {
 
   const categorizedItems = getAllItems();
   const totalItems = Object.values(jsonData.gifts).flat().length;
-  const giftedCount = Object.values(jsonData.gifts).flat().filter((item: any) => item.gifted).length;
+  const giftedCount = Object.values(jsonData.gifts).flat().filter(item => item.gifted).length;
   const progressPercentage = (giftedCount / totalItems) * 100;
 
   return (
@@ -167,7 +213,7 @@ const WeddingGiftList = () => {
             </h1>
             <div className="max-w-2xl mx-auto">
               <p className="text-xl text-stone-600 mb-4 italic font-light leading-relaxed">
-                "E disse o Senhor Deus: Não é bom que o homem esteja só; far-lhe-ei uma adjutora que esteja como diante dele."
+                &ldquo;E disse o Senhor Deus: Não é bom que o homem esteja só; far-lhe-ei uma adjutora que esteja como diante dele.&rdquo;
               </p>
               <p className="text-sm text-stone-500 font-medium tracking-wider">GÊNESIS 2:18</p>
             </div>
@@ -191,15 +237,15 @@ const WeddingGiftList = () => {
       {/* Navegação por categorias */}
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="flex flex-wrap justify-center gap-6 mb-12">
-          {categories.map((category: any) => {
+          {categories.map((category) => {
             const IconComponent = category.icon;
             return (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
                 className={`flex items-center gap-3 px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-sm ${selectedCategory === category.id
-                    ? 'bg-gradient-to-r from-purple-500 to-violet-500 text-white shadow-lg transform scale-105 shadow-purple-200'
-                    : 'bg-white text-stone-600 hover:bg-stone-50 hover:text-purple-600 border-2 border-stone-200 hover:border-purple-200 hover:shadow-md'
+                  ? 'bg-gradient-to-r from-purple-500 to-violet-500 text-white shadow-lg transform scale-105 shadow-purple-200'
+                  : 'bg-white text-stone-600 hover:bg-stone-50 hover:text-purple-600 border-2 border-stone-200 hover:border-purple-200 hover:shadow-md'
                   }`}
               >
                 <IconComponent className="w-5 h-5" />
@@ -212,16 +258,18 @@ const WeddingGiftList = () => {
         {/* Lista de presentes organizada por categoria */}
         <div className="space-y-16">
           {categorizedItems.map(({ category, items }) => {
-            const CategoryIcon = categoryIcons[category];
+            const categoryInfo = categoryData[category as keyof CategoryData];
+            const CategoryIcon = categoryInfo?.icon || Home;
+
             return (
               <div key={category} className="space-y-8">
                 {/* Título da categoria (apenas quando mostrar todos) */}
-                {selectedCategory === 'all' && (
+                {selectedCategory === 'all' && categoryInfo && (
                   <div className="flex items-center gap-4 mb-8">
                     <div className="bg-gradient-to-br from-purple-500 to-violet-500 p-4 rounded-2xl shadow-lg">
                       <CategoryIcon className="w-7 h-7 text-white" />
                     </div>
-                    <h2 className="text-3xl font-serif text-stone-800 tracking-wide">{categoryTitles[category]}</h2>
+                    <h2 className="text-3xl font-serif text-stone-800 tracking-wide">{categoryInfo.title}</h2>
                     <div className="flex-1 h-px bg-gradient-to-r from-stone-300 via-purple-200 to-transparent"></div>
                   </div>
                 )}
@@ -236,86 +284,66 @@ const WeddingGiftList = () => {
 
                 {/* Grid de itens */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {items.map((item: any) => {
-                    // const priorityBadge = getPriorityBadge(item.priority);
-
-                    return (
-                      <div
-                        key={item.id}
-                        className={`relative p-8 rounded-3xl border-2 transition-all duration-300 hover:scale-105 ${item.gifted
-                          && 'bg-gradient-to-br from-emerald-50 to-green-50 border-emerald-200 shadow-sm'
-                          }`}
-                        onClick={() => !item.gifted && handleGiftIntent(item)}
-                      >
-                        {/* Badge de prioridade */}
-                        {/* {!item.gifted && (
-                          <div className={`absolute -top-3 -right-3 px-4 py-2 rounded-full text-xs font-medium border-2 shadow-sm ${priorityBadge.color}`}>
-                            {priorityBadge.text}
-                          </div>
-                        )} */}
-
-                        {/* Status do presente */}
-                        <div className="flex items-start justify-between mb-6">
-                          <div className={`p-3 rounded-2xl shadow-sm ${item.gifted ? 'bg-emerald-100' : 'bg-gradient-to-br from-purple-100 to-violet-100'}`}>
-                            {item.gifted ? (
-                              <Check className="w-6 h-6 text-emerald-600" />
-                            ) : (
-                              <Gift className={`w-6 h-6 text-purple-600`} />
-                            )}
-                          </div>
+                  {items.map((item) => (
+                    <div
+                      key={item.id}
+                      className={`relative p-8 rounded-3xl border-2 transition-all duration-300 hover:scale-105 ${item.gifted
+                        && 'bg-gradient-to-br from-emerald-50 to-green-50 border-emerald-200 shadow-sm'
+                        }`}
+                      onClick={() => !item.gifted && handleGiftIntent(item)}
+                    >
+                      <div className="flex items-start justify-between mb-6">
+                        <div className={`p-3 rounded-2xl shadow-sm ${item.gifted ? 'bg-emerald-100' : 'bg-gradient-to-br from-purple-100 to-violet-100'}`}>
+                          {item.gifted ? (
+                            <Check className="w-6 h-6 text-emerald-600" />
+                          ) : (
+                            <Gift className={`w-6 h-6 text-purple-600`} />
+                          )}
                         </div>
-
-                        {/* Nome do item */}
-                        <h3 className={`text-xl font-medium mb-4 leading-relaxed ${item.gifted ? 'text-emerald-700' : 'text-stone-800'}`}>
-                          {item.name}
-                        </h3>
-
-                        {/* Informações de quem presenteou */}
-                        {item.gifted && (
-                          <div className="mb-6 p-4 bg-white/80 rounded-2xl border-2 border-emerald-200 shadow-sm">
-                            {/* <p className="text-sm font-semibold text-emerald-800 mb-2">
-                              Presenteado por: {item.giftedBy}
-                            </p> */}
-                            {item.message && (
-                              <p className="text-sm text-emerald-700 italic leading-relaxed">
-                                "{item.message}"
-                              </p>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Botão de ação */}
-                        {!item.gifted ? (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleGiftIntent(item);
-                            }}
-                            className="w-full py-4 px-6 rounded-2xl font-medium transition-all duration-300 bg-gradient-to-r from-purple-500 to-violet-500 text-white hover:from-purple-600 hover:to-violet-600 hover:shadow-lg hover:shadow-purple-200 transform hover:scale-105"
-                          >
-                            <span className="flex items-center justify-center gap-3">
-                              <Heart className="w-5 h-5" />
-                              <span className="text-base">Quero Presentear</span>
-                            </span>
-                          </button>
-                        ) : (
-                          <div className="w-full py-4 px-6 rounded-2xl bg-emerald-100 text-emerald-700 font-medium text-center border-2 border-emerald-200">
-                            <span className="flex items-center justify-center gap-3">
-                              <Check className="w-5 h-5" />
-                              <span className="text-base">Já Presenteado</span>
-                            </span>
-                          </div>
-                        )}
                       </div>
-                    );
-                  })}
+
+                      <h3 className={`text-xl font-medium mb-4 leading-relaxed ${item.gifted ? 'text-emerald-700' : 'text-stone-800'}`}>
+                        {item.name}
+                      </h3>
+
+                      {item.gifted && (
+                        <div className="mb-6 p-4 bg-white/80 rounded-2xl border-2 border-emerald-200 shadow-sm">
+                          {item.message && (
+                            <p className="text-sm text-emerald-700 italic leading-relaxed">
+                              &ldquo;{item.message}&rdquo;
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                      {!item.gifted ? (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleGiftIntent(item);
+                          }}
+                          className="w-full py-4 px-6 rounded-2xl font-medium transition-all duration-300 bg-gradient-to-r from-purple-500 to-violet-500 text-white hover:from-purple-600 hover:to-violet-600 hover:shadow-lg hover:shadow-purple-200 transform hover:scale-105"
+                        >
+                          <span className="flex items-center justify-center gap-3">
+                            <Heart className="w-5 h-5" />
+                            <span className="text-base">Quero Presentear</span>
+                          </span>
+                        </button>
+                      ) : (
+                        <div className="w-full py-4 px-6 rounded-2xl bg-emerald-100 text-emerald-700 font-medium text-center border-2 border-emerald-200">
+                          <span className="flex items-center justify-center gap-3">
+                            <Check className="w-5 h-5" />
+                            <span className="text-base">Já Presenteado</span>
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             );
           })}
         </div>
-
-
 
         {/* Rodapé com mensagem de agradecimento */}
         <div className="mt-16 text-center">
@@ -332,7 +360,7 @@ const WeddingGiftList = () => {
       </div>
 
       {/* Modal de confirmação de presente */}
-      {showModal && (
+      {showModal && selectedItem && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-3xl p-10 max-w-lg w-full shadow-2xl border-2 border-stone-200">
             <div className="flex items-center justify-between mb-8">
@@ -347,7 +375,7 @@ const WeddingGiftList = () => {
 
             <div className="mb-8 p-6 bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl border-2 border-purple-200">
               <h4 className="font-semibold text-purple-800 mb-3 text-lg">Item Selecionado:</h4>
-              <p className="text-purple-700 text-lg">{selectedItem?.name}</p>
+              <p className="text-purple-700 text-lg">{selectedItem.name}</p>
             </div>
 
             <div className="space-y-6">
