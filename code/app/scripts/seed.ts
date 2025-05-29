@@ -269,7 +269,7 @@ export const INITIAL_DATA: GiftGroup = {
 
 
 
-async function seedDatabase() {
+export async function seedDatabase() {
   try {
     const db = getDB();
     db.prepare(`
