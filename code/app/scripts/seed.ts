@@ -5,8 +5,8 @@ import { GiftGroup } from '../types/gift.ts';
 export const INITIAL_DATA: GiftGroup = {
   kitchen: [
     {
-      id: 'k1', name: 'Máquina de Lavar roupas', gifted: true, totalDesired: 1, images: [
-        '/images/kitchen/washing-machine.jpg'
+      id: 'k1', name: 'Máquina de Lavar Roupas', gifted: true, totalDesired: 1, images: [
+        '/images/kitchen/washing-machine.png', '/images/kitchen/new-washing-machine.png'
       ], giftedBy: 'Família Silva', message: 'Desejamos muito amor e felicidade!'
     },
     {
@@ -15,27 +15,27 @@ export const INITIAL_DATA: GiftGroup = {
       ], giftedBy: 'Tia Maria', message: ''
     },
     {
-      id: 'k3', name: 'Tábua e ferro de passar roupas', gifted: true, totalDesired: 1, images: [
+      id: 'k3', name: 'Tábua e Ferro de Passar Roupas', gifted: true, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ], giftedBy: 'João Pedro', message: 'Que sejam muito felizes!'
     },
     {
-      id: 'k4', name: 'Geladeira frost free', gifted: true, totalDesired: 1, images: [
+      id: 'k4', name: 'Geladeira Frost Free', gifted: true, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ], giftedBy: 'Pais do Noivo', message: 'Com todo nosso amor e carinho'
     },
     {
-      id: 'k5', name: 'Armário de aço', gifted: false, totalDesired: 1, images: [
+      id: 'k5', name: 'Armário de Aço', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k6', name: 'Fogão cooktop', gifted: false, totalDesired: 1, images: [
+      id: 'k6', name: 'Fogão Cooktop', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k7', name: 'Depurador de ar (exaustor ou coifa)', gifted: false, totalDesired: 1, images: [
+      id: 'k7', name: 'Depurador de Ar (Exaustor ou Coifa)', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
@@ -60,7 +60,7 @@ export const INITIAL_DATA: GiftGroup = {
       ]
     },
     {
-      id: 'k12', name: 'Jogo de Panelas antiaderentes', gifted: false, totalDesired: 1, images: [
+      id: 'k12', name: 'Jogo de Panelas Antiaderentes', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
@@ -80,12 +80,12 @@ export const INITIAL_DATA: GiftGroup = {
       ]
     },
     {
-      id: 'k16', name: 'Panela de Arroz elétrica', gifted: false, totalDesired: 1, images: [
+      id: 'k16', name: 'Panela de Arroz Elétrica', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k17', name: 'Panela de Pressão elétrica', gifted: false, totalDesired: 1, images: [
+      id: 'k17', name: 'Panela de Pressão Elétrica', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
@@ -100,7 +100,7 @@ export const INITIAL_DATA: GiftGroup = {
       ]
     },
     {
-      id: 'k20', name: 'Chaleira elétrica', gifted: false, totalDesired: 1, images: [
+      id: 'k20', name: 'Chaleira Elétrica', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
@@ -110,17 +110,17 @@ export const INITIAL_DATA: GiftGroup = {
       ]
     },
     {
-      id: 'k22', name: 'Aparelho de Jantar (qualquer cor)', gifted: false, totalDesired: 1, images: [
+      id: 'k22', name: 'Aparelho de Jantar', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k23', name: 'Jogo de talheres faqueiro', gifted: false, totalDesired: 1, images: [
+      id: 'k23', name: 'Jogo de Talheres Faqueiro', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k24', name: 'Colheres de preparo e de servir', gifted: false, totalDesired: 1, images: [
+      id: 'k24', name: 'Colheres de Preparo e de Servir', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
@@ -130,32 +130,32 @@ export const INITIAL_DATA: GiftGroup = {
       ]
     },
     {
-      id: 'k26', name: 'Tábua de corte', gifted: false, totalDesired: 1, images: [
+      id: 'k26', name: 'Tábua de Corte', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k27', name: 'Fruteira de chão', gifted: false, totalDesired: 1, images: [
+      id: 'k27', name: 'Fruteira de Chão', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k28', name: 'Fruteira de mesa', gifted: false, totalDesired: 1, images: [
+      id: 'k28', name: 'Fruteira de Mesa', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k29', name: 'Escorredor de louça', gifted: false, totalDesired: 1, images: [
+      id: 'k29', name: 'Escorredor de Louça', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k30', name: 'Travessas de vidro', gifted: false, totalDesired: 1, images: [
+      id: 'k30', name: 'Travessas de Vidro', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k31', name: 'Formas e assadeiras', gifted: false, totalDesired: 1, images: [
+      id: 'k31', name: 'Formas e Assadeiras', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
@@ -165,17 +165,17 @@ export const INITIAL_DATA: GiftGroup = {
       ]
     },
     {
-      id: 'k33', name: 'Jarras de vidro', gifted: false, totalDesired: 1, images: [
+      id: 'k33', name: 'Jarras de Vidro', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k34', name: 'Jogo de copos', gifted: false, totalDesired: 1, images: [
+      id: 'k34', name: 'Jogo de Copos', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'k35', name: 'Jogo de taças', gifted: false, totalDesired: 1, images: [
+      id: 'k35', name: 'Jogo de Taças', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
@@ -187,7 +187,7 @@ export const INITIAL_DATA: GiftGroup = {
   ],
   bedroom: [
     {
-      id: 'b1', name: 'Cama box de casal', gifted: false, totalDesired: 1, images: [
+      id: 'b1', name: 'Cama Box de Casal', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
@@ -197,7 +197,7 @@ export const INITIAL_DATA: GiftGroup = {
       ]
     },
     {
-      id: 'b3', name: 'Cobre leito', gifted: false, totalDesired: 1, images: [
+      id: 'b3', name: 'Cobre Leito', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
@@ -212,32 +212,32 @@ export const INITIAL_DATA: GiftGroup = {
       ]
     },
     {
-      id: 'b6', name: 'Ar condicionado', gifted: false, totalDesired: 1, images: [
+      id: 'b6', name: 'Ar Condicionado', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'b7', name: 'Guarda-roupa casal', gifted: false, totalDesired: 1, images: [
+      id: 'b7', name: 'Guarda-roupas Casal', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'b8', name: 'Espelho para quarto (corpo inteiro)', gifted: false, totalDesired: 1, images: [
+      id: 'b8', name: 'Espelho para Quarto (Corpo Inteiro)', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'b9', name: 'Toalhas de banho', gifted: false, totalDesired: 1, images: [
+      id: 'b9', name: 'Toalhas de Banho', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'b10', name: 'Toalhas de rosto e mão para banheiro', gifted: false, totalDesired: 1, images: [
+      id: 'b10', name: 'Toalhas de Rosto e Mão para Banheiro', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },
     {
-      id: 'b11', name: 'Kit porta escova de dente e sabão', gifted: false, totalDesired: 1, images: [
+      id: 'b11', name: 'Kit porta Escova de Dente e Sabão', gifted: false, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     }
@@ -254,7 +254,7 @@ export const INITIAL_DATA: GiftGroup = {
       ]
     },
     {
-      id: 'l3', name: 'Carpete grande', gifted: true, totalDesired: 1, images: [
+      id: 'l3', name: 'Carpete Grande', gifted: true, totalDesired: 1, images: [
         '/images/kitchen/washing-machine.jpg'
       ]
     },

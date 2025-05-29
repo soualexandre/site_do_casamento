@@ -55,6 +55,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
       {/* Imagem atual */}
       <Image
         src={images[currentIndex]}
+        fill 
         alt={`Imagem ${currentIndex + 1} do presente`}
         className="w-full h-full object-cover transition-all duration-500 ease-in-out"
       />
