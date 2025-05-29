@@ -160,11 +160,10 @@ const WeddingGiftList = () => {
       }
 
       const json: ApiResponse = await response.json();
-      console.log('Gifts data from API:', JSON.stringify(json.gifts));
 
       const transformedGifts = json.gifts.map(gift => ({
         id: gift.id,
-        category: categoryMap[gift.category] || 'kitchen',
+        category: gift.category,
         name: gift.name,
         images: gift.images.map(img => img.url),
         gifted: gift.gifted,
@@ -172,17 +171,19 @@ const WeddingGiftList = () => {
           ? gift.giftedBy.map(g => g.name).join(', ') : '',
         message:  gift.message
       }));
+      console.log('Transformed gifts:', transformedGifts);
 
       const grouped: Record<string, ItemGift[]> = { kitchen: [], bedroom: [], living: [] };
-
       transformedGifts.forEach((gift: any) => {
+        console.log('Processing gift:', gift.category);
+        console.log('gift:', gift);
         if (grouped[gift.category]) {
           grouped[gift.category].push(gift);
         } else {
           grouped.kitchen.push(gift);
         }
       });
-
+      console.log('Grouped gifts:', grouped);
       setGiftsData(grouped);
     } catch (err) {
       console.error('Fetch error:', err);
