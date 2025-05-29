@@ -20,7 +20,6 @@ export async function GET() {
   }
 }
 
-// PUT: Atualizar presente por ID
 export async function PUT(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -35,7 +34,12 @@ export async function PUT(request: NextRequest) {
 
     const payload = await request.json();
 
-    if (payload.gifted && !payload.giftedBy?.trim()) {
+    if (
+      payload.gifted &&
+      (!Array.isArray(payload.giftedBy) ||
+        payload.giftedBy.length === 0 ||
+        !payload.giftedBy[0]?.name?.trim())
+    ) {
       return NextResponse.json(
         { error: 'Nome é obrigatório' },
         { status: 400 }

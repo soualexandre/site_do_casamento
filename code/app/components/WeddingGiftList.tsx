@@ -170,10 +170,9 @@ const WeddingGiftList = () => {
         gifted: gift.gifted,
         giftedBy: Array.isArray(gift.giftedBy)
           ? gift.giftedBy.map(g => g.name).join(', ') : '',
-        message:  ''
+        message:  gift.message
       }));
 
-      // Agrupa por categoria
       const grouped: Record<string, ItemGift[]> = { kitchen: [], bedroom: [], living: [] };
 
       transformedGifts.forEach((gift: any) => {
@@ -205,59 +204,65 @@ const WeddingGiftList = () => {
   };
 
   const handleSubmitGift = async () => {
-    if (!selectedItem) return;
-    if (!formData.name.trim()) {
-      alert('Por favor, informe seu nome.');
-      return;
+  if (!selectedItem) return;
+  if (!formData.name.trim()) {
+    alert('Por favor, informe seu nome.');
+    return;
+  }
+
+  try {
+    // Envia no formato esperado pela API
+    const response = await fetch(`/api/gift?id=${selectedItem.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        gifted: true,
+        giftedBy: [{ name: formData.name.trim() }],
+        message: formData.message.trim() ? [{ message: formData.message.trim() }] : []
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Falha na atualização');
     }
 
-    try {
-      // Envia no formato esperado pela API
-      const response = await fetch(`/api/gift?id=${selectedItem.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          gifted: true,
-          giftedBy: [{ name: formData.name.trim() }],
-          message: formData.message.trim() ? [{ message: formData.message.trim() }] : []
-        })
-      });
+    // Atualizar estado local mantendo a consistência com a API
+    setGiftsData(prev => {
+      if (!prev) return null;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Falha na atualização');
-      }
-
-      // Atualizar estado local
-      setGiftsData(prev => {
-        if (!prev) return null;
-
-        return Object.entries(prev).reduce((acc, [category, items]) => {
-          const updatedItems = items.map(item =>
-            item.id === selectedItem.id
-              ? {
+      return Object.entries(prev).reduce((acc, [category, items]) => {
+        const updatedItems = items.map(item =>
+          item.id === selectedItem.id
+            ? {
                 ...item,
                 gifted: true,
-                giftedBy: formData.name.trim(),
-                message: formData.message.trim()
+                // Mantém como array de objetos para consistência
+                giftedBy: [{ name: formData.name.trim() }],
+                message: formData.message.trim() 
+                  ? [{ message: formData.message.trim() }] 
+                  : [],
+                // Para compatibilidade com a renderização:
+                giftedByDisplay: formData.name.trim(),
+                messageDisplay: formData.message.trim()
               }
-              : item
-          );
+            : item
+        );
 
-          return { ...acc, [category]: updatedItems };
-        }, {});
-      });
+        return { ...acc, [category]: updatedItems };
+      }, {});
+    });
 
-      setShowModal(false);
-      setSelectedItem(null);
-      setFormData({ name: '', message: '' });
-    } catch (err) {
-      console.error('Update error:', err);
-      alert('Erro ao atualizar presente. Tente novamente.');
-    }
-  };
+    setShowModal(false);
+    setSelectedItem(null);
+    setFormData({ name: '', message: '' });
+  } catch (err) {
+    console.error('Update error:', err);
+    alert('Erro ao atualizar presente. Tente novamente.');
+  }
+};
 
   // Cálculos estatísticos
   const { totalItems, giftedCount, progressPercentage } = useMemo(() => {
@@ -348,9 +353,9 @@ const WeddingGiftList = () => {
             </h1>
             <div className="max-w-2xl mx-auto">
               <p className="text-xl text-stone-600 mb-4 italic font-light leading-relaxed">
-                &ldquo;E disse o Senhor Deus: Não é bom que o homem esteja só; far-lhe-ei uma adjutora que esteja como diante dele.&rdquo;
+                &ldquo;há um tempo para todo propósito debaixo do céu.&rdquo;
               </p>
-              <p className="text-sm text-stone-500 font-medium tracking-wider">GÊNESIS 2:18</p>
+              <p className="text-sm text-stone-500 font-medium tracking-wider">ECLESIASTES 3:1</p>
             </div>
           </div>
 
@@ -447,9 +452,11 @@ const WeddingGiftList = () => {
                       {item.gifted && (
                         <div className="mb-6 p-4 bg-white/80 rounded-2xl border-2 border-emerald-200 shadow-sm">
                           {item.message && (
-                            <p className="text-sm text-emerald-700 italic leading-relaxed">
-                              &ldquo;{item.message}&rdquo;
-                            </p>
+                            item.message.map((msg, index) => (
+                              <p key={index} className="text-sm text-emerald-700 italic leading-relaxed">
+                                &ldquo;{msg.message}&rdquo;
+                              </p>
+                            ))
                           )}
                         </div>
                       )}
