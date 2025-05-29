@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Casamento Alexandre e Acsa",
-    description: "Cardápio da Casamento Alexandre e Acsa - Festival Gastronômico Cristão em Paraíso do Tocantins",
+    description: "Casamento Alexandre e Acsa",
     url: "https://alexandreeacsa.vercel.app", 
     siteName: "Casamento Alexandre e Acsa",
     images: [
