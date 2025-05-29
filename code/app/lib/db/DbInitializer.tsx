@@ -1,4 +1,3 @@
-// components/DbInitializer.tsx
 'use client';
 
 import { useEffect } from 'react';
@@ -17,7 +16,7 @@ const DbInitializer = () => {
     initializeDb();
   }, []);
 
-  return null; // Este componente não renderiza nada
+  return null; 
 };
 
 export default DbInitializer;
