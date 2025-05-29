@@ -8,7 +8,8 @@ export interface ItemGift {
   giftedBy?: string | null;
   message?: string | null;
   totalDesired: number;
-  images?: String[];
+  images?: string[];
+  category?: keyof GiftGroup;
 }
 
 export interface GiftGroup {

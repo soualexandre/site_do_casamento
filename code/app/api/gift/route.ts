@@ -2,10 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GiftRepository } from '../../lib/db/giftRepository.ts';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const gifts = await GiftRepository.getAll();
-    console.log('Gifts fetched successfully:', gifts);
     return NextResponse.json({ gifts });
   } catch (error) {
     console.error('API Error:', error);

@@ -1,8 +1,9 @@
 "use client"
-import { Bed, Check, ChefHat, Gift, Heart, Home, MessageCircle, User, X } from 'lucide-react';
+import { Bed, Check, ChefHat, ChevronLeft, ChevronRight, Gift, Heart, Home, MessageCircle, User, X } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Category, CategoryData } from '../types/category.ts';
 import { CategoryId, ItemGift } from '../types/gift.ts';
+import Image from 'next/image';
 
 const categories: Category[] = [
   { id: 'all', name: 'Todos os Itens', icon: Gift },
@@ -24,6 +25,84 @@ const categoryData: CategoryData = {
     title: 'Sala de Estar',
     icon: Home
   }
+};
+
+
+const ImageCarousel = ({ images }: { images: string[] }) => {
+  console.log('Rendering ImageCarousel with images:', images);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex(prevIndex => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+  };
+
+  const goToPrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex(prevIndex => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+  };
+
+  if (!images || images.length === 0) {
+    return (
+      <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-64 flex items-center justify-center text-stone-500">
+        Sem imagem
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-full h-64 overflow-hidden rounded-2xl mb-6 group">
+      {/* Imagem atual */}
+      <Image
+        src={images[currentIndex]}
+        alt={`Imagem ${currentIndex + 1} do presente`}
+        className="w-full h-full object-cover transition-all duration-500 ease-in-out"
+      />
+
+      {/* Navegação */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={goToPrev}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            aria-label="Imagem anterior"
+          >
+            <ChevronLeft className="w-5 h-5 text-stone-700" />
+          </button>
+          <button
+            onClick={goToNext}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            aria-label="Próxima imagem"
+          >
+            <ChevronRight className="w-5 h-5 text-stone-700" />
+          </button>
+        </>
+      )}
+
+      {/* Indicadores */}
+      {images.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentIndex(index);
+              }}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 ${index === currentIndex ? 'bg-white' : 'bg-white/50 hover:bg-white/80'
+                }`}
+              aria-label={`Ir para imagem ${index + 1}`}
+              aria-current={index === currentIndex}
+            />
+          ))}
+        </div>
+      )}
+
+      <div className="absolute top-4 right-4 bg-black/40 text-white text-xs px-2 py-1 rounded-full">
+        {currentIndex + 1}/{images.length}
+      </div>
+    </div>
+  );
 };
 
 const WeddingGiftList = () => {
@@ -200,8 +279,8 @@ const WeddingGiftList = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-purple-100/30 to-violet-100/30"></div>
         <div className="relative max-w-4xl mx-auto px-6 py-20 text-center">
           <div className="mb-10">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-yellow-200 to-violet-200 mb-6">
-              <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16" />
+            <div className="inline-flex items-center justify-center w-26 h-26 rounded-full bg-gradient-to-br from-yellow-200 to-violet-200 mb-6">
+              <Image src="/LOGO.png" alt="Logo do Casamento" width={130} height={130} />
             </div>
             <h1 className="text-4xl md:text-6xl font-serif text-stone-800 mb-8 leading-tight tracking-wide">
               Nossa Lista de Presentes
@@ -287,12 +366,15 @@ const WeddingGiftList = () => {
                         }`}
                       onClick={() => !item.gifted && handleGiftIntent(item)}
                     >
-                      <div className="flex items-start justify-between mb-6">
-                        <div className={`p-3 rounded-2xl shadow-sm ${item.gifted ? 'bg-emerald-100' : 'bg-gradient-to-br from-purple-100 to-violet-100'}`}>
+                      <div className="relative">
+                        <ImageCarousel images={item.images || []} />
+                        {/* Ícone de status */}
+                        <div className={`absolute top-4 right-4 p-3 rounded-2xl shadow-sm z-10 ${item.gifted ? 'bg-emerald-100' : 'bg-gradient-to-br from-purple-100 to-violet-100'
+                          }`}>
                           {item.gifted ? (
                             <Check className="w-6 h-6 text-emerald-600" />
                           ) : (
-                            <Gift className={`w-6 h-6 text-purple-600`} />
+                            <Gift className="w-6 h-6 text-purple-600" />
                           )}
                         </div>
                       </div>
