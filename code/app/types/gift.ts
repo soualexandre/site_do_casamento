@@ -5,11 +5,11 @@ export interface ItemGift {
   id: string;
   name: string;
   gifted: boolean;
-  giftedBy?: string | null;
-  message?: string | null;
+  giftedBy?: [{name: string}] | null;
+  message?: [{message: string}] | null;
   totalDesired: number;
-  images?: string[];
-  category?: keyof GiftGroup;
+  images?: [{url: string; alt?: string}];
+  category?: string;
 }
 
 export interface GiftGroup {

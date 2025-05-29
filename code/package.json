@@ -12,8 +12,10 @@
     "migrate": "node --loader ts-node/esm --require tsconfig-paths/register ./app/lib/db.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.8",
     "@types/better-sqlite3": "^7.6.13",
     "better-sqlite3": "^11.10.0",
+    "dotenv": "^16.5.0",
     "lucide-react": "^0.506.0",
     "next": "15.3.1",
     "react": "^19.0.0",

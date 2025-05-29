@@ -1,9 +1,38 @@
 "use client"
 import { Bed, Check, ChefHat, ChevronLeft, ChevronRight, Gift, Heart, Home, MessageCircle, User, X } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Category, CategoryData } from '../types/category.ts';
-import { CategoryId, ItemGift } from '../types/gift.ts';
 import Image from 'next/image';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Category, CategoryData } from '../types/category';
+import { CategoryId, ItemGift } from '../types/gift';
+
+type GiftedBy = {
+  name: string;
+};
+
+type GiftMessage = {
+  message: string;
+};
+
+type GiftImage = {
+  alt: string;
+  url: string;
+};
+
+type ApiGift = {
+  id: number;
+  created_at: string;
+  category: string;
+  name: string;
+  quantity: number;
+  images: GiftImage[];
+  gifted: boolean;
+  giftedBy: GiftedBy[];
+  message: GiftMessage[];
+};
+
+type ApiResponse = {
+  gifts: ApiGift[];
+};
 
 const categories: Category[] = [
   { id: 'all', name: 'Todos os Itens', icon: Gift },
@@ -27,6 +56,12 @@ const categoryData: CategoryData = {
   }
 };
 
+const categoryMap: Record<string, CategoryId> = {
+  "Cozinha": "kitchen",
+  "Quarto": "bedroom",
+  "Banheiro": "bedroom",
+  "Sala de Estar": "living"
+};
 
 const ImageCarousel = ({ images }: { images: string[] }) => {
   console.log('Rendering ImageCarousel with images:', images);
@@ -55,7 +90,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
       {/* Imagem atual */}
       <Image
         src={images[currentIndex]}
-        fill 
+        fill
         alt={`Imagem ${currentIndex + 1} do presente`}
         className="w-full h-full object-cover transition-all duration-500 ease-in-out"
       />
@@ -124,8 +159,32 @@ const WeddingGiftList = () => {
         throw new Error('Falha ao carregar dados');
       }
 
-      const { gifts } = await response.json();
-      setGiftsData(gifts);
+      const json: ApiResponse = await response.json();
+      console.log('Gifts data from API:', JSON.stringify(json.gifts));
+
+      const transformedGifts = json.gifts.map(gift => ({
+        id: gift.id,
+        category: categoryMap[gift.category] || 'kitchen',
+        name: gift.name,
+        images: gift.images.map(img => img.url),
+        gifted: gift.gifted,
+        giftedBy: Array.isArray(gift.giftedBy)
+          ? gift.giftedBy.map(g => g.name).join(', ') : '',
+        message:  ''
+      }));
+
+      // Agrupa por categoria
+      const grouped: Record<string, ItemGift[]> = { kitchen: [], bedroom: [], living: [] };
+
+      transformedGifts.forEach((gift: any) => {
+        if (grouped[gift.category]) {
+          grouped[gift.category].push(gift);
+        } else {
+          grouped.kitchen.push(gift);
+        }
+      });
+
+      setGiftsData(grouped);
     } catch (err) {
       console.error('Fetch error:', err);
       setError('Erro ao carregar lista de presentes');
@@ -153,6 +212,7 @@ const WeddingGiftList = () => {
     }
 
     try {
+      // Envia no formato esperado pela API
       const response = await fetch(`/api/gift?id=${selectedItem.id}`, {
         method: 'PUT',
         headers: {
@@ -160,8 +220,8 @@ const WeddingGiftList = () => {
         },
         body: JSON.stringify({
           gifted: true,
-          giftedBy: formData.name.trim(),
-          message: formData.message.trim()
+          giftedBy: [{ name: formData.name.trim() }],
+          message: formData.message.trim() ? [{ message: formData.message.trim() }] : []
         })
       });
 
