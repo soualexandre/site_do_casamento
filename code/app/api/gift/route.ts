@@ -4,7 +4,10 @@ import { supabase } from '../../lib/supabaseClient';
 // GET: Buscar todos os presentes
 export async function GET() {
   try {
-    const { data, error } = await supabase.from('gifts').select('*');
+    const { data, error } = await supabase
+      .from('gifts')
+      .select('*')
+      .order('name', { ascending: true });;
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
@@ -56,15 +59,6 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    console.log('giftedBy:', currentItem);
-    // if (currentItem.giftedBy.length >= currentItem.quantity) {
-    //   return NextResponse.json(
-    //     { error: 'Quantidade máxima de doações atingida' },
-    //     { status: 400 }
-    //   );
-    // }
-
-    // Preparar atualizações
     const updatedGiftedBy = [...(currentItem.giftedBy || []), { name: name.trim() }];
 
     let updatedMessage = currentItem.message || [];
