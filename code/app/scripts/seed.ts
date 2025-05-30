@@ -17,7 +17,7 @@ async function seed() {
         id: gift.id,
         name: gift.name,
         gifted: gift.gifted,
-        quantity: gift.totalDesired,
+        quantity: gift.quantity,
         category: gift.category,
         images: gift.images,
         giftedBy: gift.giftedBy || null,

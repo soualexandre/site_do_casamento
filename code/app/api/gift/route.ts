@@ -32,23 +32,52 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const payload = await request.json();
+    // Obter dados do corpo da requisição
+    const { name, message } = await request.json();
 
-    if (
-      payload.gifted &&
-      (!Array.isArray(payload.giftedBy) ||
-        payload.giftedBy.length === 0 ||
-        !payload.giftedBy[0]?.name?.trim())
-    ) {
+    if (!name || !name.trim()) {
       return NextResponse.json(
         { error: 'Nome é obrigatório' },
         { status: 400 }
       );
     }
 
+    // Buscar o item atual
+    const { data: currentItem, error: fetchError } = await supabase
+      .from('gifts')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (fetchError || !currentItem) {
+      return NextResponse.json(
+        { error: 'Item não encontrado' },
+        { status: 404 }
+      );
+    }
+
+    console.log('giftedBy:', currentItem);
+    // if (currentItem.giftedBy.length >= currentItem.quantity) {
+    //   return NextResponse.json(
+    //     { error: 'Quantidade máxima de doações atingida' },
+    //     { status: 400 }
+    //   );
+    // }
+
+    // Preparar atualizações
+    const updatedGiftedBy = [...(currentItem.giftedBy || []), { name: name.trim() }];
+
+    let updatedMessage = currentItem.message || [];
+    if (message && message.trim()) {
+      updatedMessage = [...updatedMessage, { message: message.trim() }];
+    }
+
     const { error, data } = await supabase
       .from('gifts')
-      .update(payload)
+      .update({
+        giftedBy: updatedGiftedBy,
+        message: updatedMessage,
+      })
       .eq('id', id)
       .select();
 
@@ -62,7 +91,7 @@ export async function PUT(request: NextRequest) {
 
     if (!data || data.length === 0) {
       return NextResponse.json(
-        { error: 'Item não encontrado' },
+        { error: 'Item não encontrado após atualização' },
         { status: 404 }
       );
     }

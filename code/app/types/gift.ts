@@ -7,7 +7,7 @@ export interface ItemGift {
   gifted: boolean;
   giftedBy?: [{name: string}] | null;
   message?: [{message: string}] | null;
-  totalDesired: number;
+  quantity: number;
   images?: [{url: string; alt?: string}];
   category?: string;
 }

@@ -1,11 +1,9 @@
-"use client"
-
-import WeddingGiftList from "./components/WeddingGiftList";
+import  {GiftPage}  from "./pages/gift_wedding_page/index";
 
 const PageInitial = () => {
   return (
     <div>
-      <WeddingGiftList/>
+      <GiftPage />  
     </div>
   )
 };
