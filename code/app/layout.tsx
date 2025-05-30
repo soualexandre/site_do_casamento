@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "Casamento Alexandre e Acsa",
     images: [
       {
-        url: "/preview.JPG", 
+        url: "/preview.jpg", 
         width: 1200,
         height: 630,
         alt: "Banner do Casamento Alexandre e Acsa",
