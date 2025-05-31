@@ -4,8 +4,8 @@ import Home from "./pages/home";
 const PageInitial = () => {
   return (
     <div>
-      <Home/>
-      {/* <GiftPage />   */}
+      {/* <Home/> */}
+      <GiftPage />  
     </div>
   )
 };
