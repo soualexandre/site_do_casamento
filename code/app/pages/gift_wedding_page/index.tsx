@@ -75,6 +75,7 @@ export const GiftPage = () => {
         <CategorySelector
           categories={categories}
           selectedCategory={selectedCategory}
+          //@ts-ignore
           onSelect={setSelectedCategory}
         />
 

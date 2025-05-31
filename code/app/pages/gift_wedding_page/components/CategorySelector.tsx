@@ -4,7 +4,7 @@ import { Category } from '../types/gifts';
 type CategorySelectorProps = {
   categories: Category[];
   selectedCategory: string;
-  onSelect: (categoryId: string) => void;
+  onSelect: (categoryId: string) => any;
 };
 
 export default function CategorySelector({ 
