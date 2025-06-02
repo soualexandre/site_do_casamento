@@ -21,11 +21,6 @@ export const GiftItem = ({ item, onSelect }: GiftItemProps) => {
       }`}
       onClick={() => !isGifted && onSelect(item)}
     >
-      {/* Status badge */}
-      <div className="absolute top-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full z-10">
-        Reserva de presentes {item?.giftedBy?.length ?? 0} / {item?.quantity} 
-      </div>
-
       {/* Ícone de status */}
       <div
         className={`absolute top-3 right-3 p-2 rounded-full z-10 ${
@@ -53,7 +48,7 @@ export const GiftItem = ({ item, onSelect }: GiftItemProps) => {
             isGifted ? 'text-emerald-700' : 'text-gray-800'
           }`}
         >
-          {item.name}
+          {item.name} {item?.giftedBy?.length ?? 0}/{item?.quantity} 
         </h3>
 
         {/* Messages with smooth scrolling */}
