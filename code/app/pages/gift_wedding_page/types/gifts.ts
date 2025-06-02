@@ -1,7 +1,8 @@
 import { Bed, ChefHat, Gift, Home } from "lucide-react";
 import { ComponentType, SVGProps } from "react";
+import { FaTools } from "react-icons/fa";
 
-export type CategoryId = 'all' | 'kitchen' | 'bedroom' | 'living';
+export type CategoryId = 'all' | 'kitchen' | 'bedroom' | 'living' | 'tools';
 
 export type GiftedBy = {
   name: string;
@@ -53,7 +54,8 @@ export const categories: Category[] = [
   { id: 'all', name: 'Todos os Itens', icon: Gift },
   { id: 'kitchen', name: 'Cozinha & Área de Serviço', icon: ChefHat },
   { id: 'bedroom', name: 'Quarto & Banheiro', icon: Bed },
-  { id: 'living', name: 'Sala de Estar', icon: Home }
+  { id: 'living', name: 'Sala de Estar', icon: Home },
+  { id: 'tools', name: 'Ferramentas', icon: FaTools }
 ];
 
 export const categoryData: CategoryData = {
@@ -68,6 +70,10 @@ export const categoryData: CategoryData = {
   living: {
     title: 'Sala de Estar',
     icon: Home
+  },
+  tools: {
+    title: 'Ferramentas',
+    icon: FaTools
   }
 };
 
@@ -75,5 +81,6 @@ export const categoryMap: Record<string, CategoryId> = {
   "Cozinha": "kitchen",
   "Quarto": "bedroom",
   "Banheiro": "bedroom",
-  "Sala de Estar": "living"
+  "Sala de Estar": "living",
+  "Ferramentas": "tools"
 };

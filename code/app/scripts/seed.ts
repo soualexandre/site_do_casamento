@@ -9,8 +9,6 @@ const supabase = createClient(
 );
 
 async function seed() {
-  console.log('🌱 Iniciando seed no Supabase...');
-
   for (const [room, gifts] of Object.entries(INITIAL_DATA)as [string, ItemGift[]][]) {
     for (const gift of gifts) {
       const { error } = await supabase.from('gifts').insert({

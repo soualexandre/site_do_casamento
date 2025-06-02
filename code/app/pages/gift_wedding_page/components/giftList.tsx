@@ -27,7 +27,7 @@ export const GiftList = ({
       {categorizedItems.map(({ category, items }) => {
         const CategoryIcon = categoryIcons[category] || Home;
         const categoryInfo = categoryData[category as keyof typeof categoryData];
-
+        console.log('Rendering category:', category, 'with items:', items);
         return (
           <div key={category} className="space-y-6">
             {/* Título da categoria (exibido apenas no modo "todos") */}
@@ -56,7 +56,7 @@ export const GiftList = ({
 
             {/* Lista de itens */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {items.map((item) => (
+              {(items ?? []).map((item) => (
                 <GiftItem key={item.id} item={item} onSelect={onGiftSelect} />
               ))}
             </div>

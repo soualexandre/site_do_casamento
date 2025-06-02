@@ -28,7 +28,7 @@ export const useGiftList = () => {
 
             const json: ApiResponse = await response.json();
 
-            const grouped: Record<string, ItemGift[]> = { kitchen: [], bedroom: [], living: [] };
+            const grouped: Record<string, ItemGift[]> = { kitchen: [], bedroom: [], living: [], tools: [] };
 
             json.gifts.forEach((gift) => {
                 const categoryId = gift.category;
@@ -36,8 +36,6 @@ export const useGiftList = () => {
                     grouped[categoryId].push(gift);
                 }
             });
-
-            console.log( 'Grouped gifts:', JSON.stringify(grouped, null, 2));
 
             setGiftsData(grouped);
         } catch (err) {
@@ -55,7 +53,6 @@ export const useGiftList = () => {
     const handleGiftIntent = (item: ItemGift) => {
         if (item.gifted && (item.giftedBy?.length ?? 0) >= item.quantity) return;
         setSelectedItem(item);
-        console.log('Selected item:', JSON.stringify(item));
         setFormData({ name: '', message: '' });
         setShowModal(true);
     };
@@ -139,6 +136,9 @@ export const useGiftList = () => {
                 items
             }));
         }
+
+        console.log('Selected category:', selectedCategory);
+        console.log('giftsData[selectedCategory]:', giftsData[selectedCategory]);
 
         return [{
             category: selectedCategory,
