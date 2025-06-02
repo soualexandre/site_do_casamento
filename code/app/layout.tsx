@@ -12,14 +12,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Casamento Alexandre e Acsa",
-  description: "",
+  title: "Lista de Presentes - Casamento Alexandre e Acsa",
+  description: "O grande dia está chegando! Participe desse momento marcante na vida de Alexandre e Acsa com um presente especial escolhido com amor.",
   icons: {
     icon: "/LOGO.png", 
   },
   openGraph: {
-    title: "Casamento Alexandre e Acsa",
-    description: "Casamento Alexandre e Acsa",
+    title: "Lista de Presentes - Casamento Alexandre e Acsa",
+    description: "O grande dia está chegando! Participe desse momento marcante na vida de Alexandre e Acsa com um presente especial escolhido com amor.",
     url: "https://alexandreeacsa.vercel.app", 
     siteName: "Casamento Alexandre e Acsa",
     images: [
