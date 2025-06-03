@@ -9,7 +9,7 @@ export const WeddingFooter = () => (
       </div>
       <h3 className="text-3xl font-serif text-stone-800 mb-6 tracking-wide">Muito Obrigado!</h3>
       <p className="text-stone-600 leading-relaxed text-lg">
-        Cada presente é uma bênção em nossa nova jornada juntos. Sua generosidade e carinho tornam nosso sonho ainda mais especial. Que Deus abençoe abundantemente sua vida!
+        Cada presente é uma bênção em nossa nova jornada juntos. Sua generosidade e carinho tornam nosso sonho ainda mais real. Que Deus abençoe abundantemente sua vida!
       </p>
     </div>
   </div>
