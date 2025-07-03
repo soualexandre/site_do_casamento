@@ -43,11 +43,17 @@ export const GiftConfirmationModal = ({
           </div>
 
           {/* Item Preview */}
-          <div className="mb-6 md:mb-8 p-4 md:p-5 bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl border border-purple-100">
+          <div className="mb-4 md:mb-6 p-4 md:p-5 bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl border border-purple-100">
             <h4 className="font-medium text-purple-700 mb-2 text-sm md:text-base">
               Você está presenteando:
             </h4>
             <p className="text-purple-800 font-semibold text-lg md:text-xl">{item.name}</p>
+          </div>
+
+          {/* Friendly Info Note */}
+          <div className="mb-6 md:mb-8 bg-yellow-50 border border-yellow-100 rounded-xl px-4 py-3 md:px-5 md:py-4 text-sm md:text-base text-yellow-800">
+            🎁 Esta é uma lista simbólica e feita com muito carinho!
+            O presente pode ser entregue antes do dia da festa ou até mesmo no dia, como for melhor pra você. O importante é sua presença e o carinho. 💜
           </div>
 
           {/* Form */}
@@ -92,11 +98,10 @@ export const GiftConfirmationModal = ({
             <button
               onClick={onSubmit}
               disabled={!formData.name.trim()}
-              className={`flex-1 py-3 px-4 md:py-4 text-white rounded-xl transition-all duration-200 font-medium text-base shadow-md ${
-                formData.name.trim()
+              className={`flex-1 py-3 px-4 md:py-4 text-white rounded-xl transition-all duration-200 font-medium text-base shadow-md ${formData.name.trim()
                   ? 'bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600 active:scale-[0.98]'
                   : 'bg-gray-400 cursor-not-allowed'
-              }`}
+                }`}
             >
               Confirmar Presente
             </button>
