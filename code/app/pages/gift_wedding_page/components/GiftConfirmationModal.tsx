@@ -53,7 +53,7 @@ export const GiftConfirmationModal = ({
           {/* Friendly Info Note */}
           <div className="mb-6 md:mb-8 bg-yellow-50 border border-yellow-100 rounded-xl px-4 py-3 md:px-5 md:py-4 text-sm md:text-base text-yellow-800">
             🎁 Esta é uma lista simbólica e feita com muito carinho!
-            O presente pode ser entregue antes do dia da festa ou até mesmo no dia, como for melhor pra você. O importante é sua presença e o carinho. 💜
+            O presente pode ser entregue antes do dia da festa ou até mesmo no dia, como for melhor pra você. 💜
           </div>
 
           {/* Form */}
