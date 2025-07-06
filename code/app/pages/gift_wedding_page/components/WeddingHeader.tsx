@@ -44,10 +44,7 @@ export const WeddingHeader = ({ stats }: WeddingHeaderProps) => (
 
         <div className="max-w-2xl mx-auto">
           <p className="text-lg md:text-xl text-stone-600 mb-2 md:mb-3 italic font-light leading-relaxed">
-            &ldquo;Há um tempo para todo propósito debaixo do céu.&rdquo;
-          </p>
-          <p className="text-xs md:text-sm text-stone-500 font-medium tracking-wider">
-            ECLESIASTES 3:1
+            &ldquo;Caso deseje presentear com algum item que não esteja na lista, fique à vontade.&rdquo;
           </p>
         </div>
       </div>
