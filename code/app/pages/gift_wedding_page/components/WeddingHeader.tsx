@@ -14,8 +14,8 @@ export const WeddingHeader = ({ stats }: WeddingHeaderProps) => (
   <div className="relative overflow-hidden">
     {/* Imagem de fundo cobrindo todo o header */}
     <div className="absolute inset-0 z-0">
-      <Image 
-        src="/preview.jpg" 
+      <Image
+        src="/preview.jpg"
         alt="Fundo do Casamento"
         fill
         priority
@@ -29,10 +29,10 @@ export const WeddingHeader = ({ stats }: WeddingHeaderProps) => (
     <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-12 md:py-20 text-center">
       <div className="mb-8 md:mb-10">
         <div className="inline-flex items-center justify-center w-20 h-20 md:w-26 md:h-26 rounded-full bg-gradient-to-br from-yellow-200 to-violet-200 mb-4 md:mb-6">
-          <Image 
-            src="/LOGO.png" 
-            alt="Logo do Casamento" 
-            width={90} 
+          <Image
+            src="/LOGO.png"
+            alt="Logo do Casamento"
+            width={90}
             height={90}
             className="w-16 h-16 md:w-24 md:h-24"
           />
@@ -43,8 +43,8 @@ export const WeddingHeader = ({ stats }: WeddingHeaderProps) => (
         </h1>
 
         <div className="max-w-2xl mx-auto">
-          <p className="text-lg md:text-xl text-stone-600 mb-2 md:mb-3 italic font-light leading-relaxed">
-            &ldquo;Caso deseje presentear com algum item que não esteja na lista, fique à vontade.&rdquo;
+          <p className="text-xs md:text-sm text-stone-600 mb-2 md:mb-3 italic font-light leading-relaxed">
+            Caso deseje presentear com algum item que não esteja na lista, fique  vontade.
           </p>
         </div>
       </div>
