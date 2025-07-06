@@ -44,7 +44,7 @@ export const WeddingHeader = ({ stats }: WeddingHeaderProps) => (
 
         <div className="max-w-2xl mx-auto">
           <p className="text-xs md:text-sm text-stone-600 mb-2 md:mb-3 italic font-light leading-relaxed">
-            Caso deseje presentear com algum item que não esteja na lista, fique  vontade.
+            Caso deseje presentear com algum item que não esteja na lista, fique à vontade.
           </p>
         </div>
       </div>
